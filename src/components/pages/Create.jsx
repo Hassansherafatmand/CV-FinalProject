@@ -7,7 +7,6 @@ import {
   Radio,
 } from "@mui/material";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
-import InputFileUpload from "../InputFileUpload";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
@@ -52,8 +51,6 @@ const Create = () => {
 
     //This if statement says when we have an input in our form (title and details)
     if (title && details) {
-      // console.log(title, details, category, imageUrl);
-
       // send post request to add data to db.json every time that we submit the form
       fetch("http://localhost:8000/projects", {
         method: "POST",

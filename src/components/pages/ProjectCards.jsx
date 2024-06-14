@@ -10,9 +10,6 @@ import { DeleteOutline } from "@mui/icons-material";
 import { Button, CardMedia } from "@mui/material";
 import { Link } from "react-router-dom";
 
-// defining the breaking point for mobile viewport
-// Fetching the date in an object from useFetch component that I made to evoke the data.
-//Error handling whether it is an error or data is pending
 /*************************| Project Cards Page|*******************************/
 const ProjectCards = ({ project, handleDelete }) => {
   return (

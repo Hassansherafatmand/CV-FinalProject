@@ -16,7 +16,6 @@ const DisplayProject = () => {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
   const { id } = useParams();
-  // console.log("Project ID from URL:", id);
 
   // Fetching the date in an object from useFetch component that I made to evoke the data.
   const {
@@ -28,7 +27,6 @@ const DisplayProject = () => {
 
   // Find the project by id to dipslay the specifi project what we clicked to read more about it.
   const project = projects ? projects.find((p) => p.id === id) : null;
-  // console.log("Found project:", project);
 
   return (
     <Container
