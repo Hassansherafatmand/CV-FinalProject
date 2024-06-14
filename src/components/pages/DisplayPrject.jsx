@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import {
   Container,
   Typography,
@@ -10,12 +10,15 @@ import {
 import useFetch from "../useFetch";
 import { useTheme } from "@mui/material/styles";
 
+/**********************| Display Project Page|***********************/
 const DisplayProject = () => {
+  // defining the breaking point for mobile viewport
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
   const { id } = useParams();
-  console.log("Project ID from URL:", id);
+  // console.log("Project ID from URL:", id);
 
+  // Fetching the date in an object from useFetch component that I made to evoke the data.
   const {
     data: projects,
     isPending,
@@ -23,21 +26,24 @@ const DisplayProject = () => {
   } = useFetch("http://localhost:8000/projects");
   console.log("Fetched projects:", projects);
 
-  // Find the project by id
+  // Find the project by id to dipslay the specifi project what we clicked to read more about it.
   const project = projects ? projects.find((p) => p.id === id) : null;
-  console.log("Found project:", project);
+  // console.log("Found project:", project);
 
   return (
     <Container
       maxWidth="md"
       sx={{ padding: isSmallScreen ? "0 24px" : "40px 0" }}
     >
+      {/* Error handling whether it is an error or data is pending */}
       {isPending && <Typography variant="h6">Loading...</Typography>}
       {error && (
         <Typography variant="h6" color="error">
           {error}
         </Typography>
       )}
+
+      {/* If we have a project, create a title, image, paragraph, and a button */}
       {project ? (
         <Box>
           <Typography
@@ -76,11 +82,14 @@ const DisplayProject = () => {
             color="primary"
             size={isSmallScreen ? "medium" : "large"}
             fullWidth={isSmallScreen}
+            component={Link}
+            to={`/projects`}
           >
-            Learn More
+            View All
           </Button>
         </Box>
       ) : (
+        // If we dont have the project just diisplay a message
         <Typography variant="h6" color="textSecondary" textAlign="center">
           Project not found
         </Typography>

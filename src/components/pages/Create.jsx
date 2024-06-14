@@ -1,4 +1,4 @@
-import { Container, Typography, Button, TextField } from "@mui/material";
+import { Container, Typography, Button, TextField, Box } from "@mui/material";
 import {
   FormLabel,
   FormControl,
@@ -7,7 +7,6 @@ import {
   Radio,
 } from "@mui/material";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
-// import { useState } from "react";
 import InputFileUpload from "../InputFileUpload";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -19,8 +18,7 @@ const Create = () => {
   const [category, setCategory] = useState("front-end");
   const [imageUrl, setImageUrl] = useState("");
 
-  //Get the Current date
-
+  //Get the Current date to display it in each card
   const currentDate = new Date().toLocaleDateString("en-US", {
     month: "long",
     day: "2-digit",
@@ -52,8 +50,10 @@ const Create = () => {
       setImageError(true);
     }
 
+    //This if statement says when we have an input in our form (title and details)
     if (title && details) {
-      console.log(title, details, category, imageUrl);
+      // console.log(title, details, category, imageUrl);
+
       // send post request to add data to db.json every time that we submit the form
       fetch("http://localhost:8000/projects", {
         method: "POST",
@@ -71,15 +71,39 @@ const Create = () => {
   return (
     <Container size="sm">
       <Typography
-        variant="h6"
-        color="textSecondary"
+        variant="h4"
         component="h2"
+        sx={{
+          fontWeight: "bold",
+          marginBottom: "20px",
+          lineHeight: "4rem",
+          margin: "32px 0 0 0",
+        }}
+        color="textSecondary"
         gutterBottom
-        sx={{ margin: "32px 0 0 0" }}
       >
-        Create a New Note
+        Create a New Project
       </Typography>
+      <Typography
+        variant="body1"
+        color="textSecondary"
+        gutterBottom
+        sx={{
+          marginBottom: "20px",
+          color: "text.secondary",
+          textAlign: "justify",
+          lineHeight: "2.5rem",
+          fontSize: "1.2rem",
+        }}
+      >
+        Fill out the form below to create a new project. Provide the title,
+        description, category, and an optional image URL. After submission, your
+        project will appear on the projects page.
+      </Typography>
+
+      {/************************* Form ************************/}
       <form noValidate autoComplete="off" onSubmit={handleSubmit}>
+        {/* Title */}
         <TextField
           onChange={(e) => setTitle(e.target.value)}
           label="Title"
@@ -90,6 +114,8 @@ const Create = () => {
           margin="normal"
           error={titleError}
         />
+
+        {/* Details */}
         <TextField
           onChange={(e) => setDetails(e.target.value)}
           label="Details"
@@ -102,24 +128,28 @@ const Create = () => {
           margin="normal"
           error={detailsError}
         ></TextField>
-        <FormControl sx={{ margin: "16px" }}>
-          <FormLabel sx={{ marginBottom: "16px" }}>Upload Photo</FormLabel>
-          <InputFileUpload />
-        </FormControl>
 
-        {/************************* radio buttons ************************/}
+        {/* Image URL */}
         <TextField
           onChange={(e) => setImageUrl(e.target.value)} // Handle image URL input
-          label="Image URL" // Label for image URL input field
+          label="Image URL"
           variant="outlined"
           color="primary"
           fullWidth
           margin="normal"
           error={imageError}
         />
-        <Container>
-          <FormControl sx={{ margin: "16px" }}>
-            <FormLabel>Work Experiences</FormLabel>
+        <Box
+          sx={{
+            marginBottom: "20px",
+          }}
+        >
+          <FormControl sx={{ margin: "16px 0", padding: "8px 0" }}>
+            <FormLabel
+              sx={{ padding: "16px 0", fontWeight: "bold", fontSize: "1.2rem" }}
+            >
+              Work Experiences
+            </FormLabel>
             <RadioGroup
               value={category}
               onChange={(e) => setCategory(e.target.value)}
@@ -141,7 +171,7 @@ const Create = () => {
               />
             </RadioGroup>
           </FormControl>
-        </Container>
+        </Box>
         <Button
           type="submit"
           variant="contained"

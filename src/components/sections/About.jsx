@@ -1,19 +1,9 @@
 import { Container, Typography, useMediaQuery } from "@mui/material";
-
-// Icons********************
-import {
-  TwitterIcon,
-  YouTubeIcon,
-  GitHubIcon,
-  PinterestIcon,
-} from "@mui/icons-material/Twitter";
-import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
-
-// ****************|Styles|**********************
-
-import { createTheme } from "@mui/material/styles";
 import Link from "@mui/material/Link";
 
+// ****************|Styles|**********************
+import { createTheme } from "@mui/material/styles";
+//Created some custome style
 const theme = createTheme({
   components: {
     Container: {
@@ -24,11 +14,10 @@ const theme = createTheme({
   },
 });
 
-// ****************|Start SectionHero|**********************
+// ************************|About page|****************************
 const About = () => {
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
   return (
-    // <ThemeProvider theme={theme}>
     <Container
       sx={{
         flexWrap: isSmallScreen ? "wrap" : "nowrap",
@@ -76,9 +65,6 @@ const About = () => {
         .
       </Typography>
     </Container>
-
-    // </ThemeProvider>
   );
 };
-
 export default About;

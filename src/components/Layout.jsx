@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import {
   Box,
-  Container,
   Drawer,
-  Typography,
   List,
   ListItem,
   ListItemText,
@@ -18,18 +16,19 @@ import {
 import { useNavigate, useLocation } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
-
+import { useTheme } from "@mui/material/styles";
 // Import the theme object from your Them.jsx file
-import theme from "../Theme";
 
+/*************************| Styling |*******************************/
+// Styling for the drawer and its components
 const drawerWidth = 240;
-
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   padding: theme.spacing(0, 1),
   ...theme.mixins.toolbar,
   justifyContent: "flex-end",
+  marginRight: "12px",
 }));
 
 const CustomDrawer = styled(({ miniVariant, ...other }) => (
@@ -44,6 +43,7 @@ const CustomDrawer = styled(({ miniVariant, ...other }) => (
   },
 }));
 
+// Styling the button in the drawer (color, background, etc)
 const ActiveListItem = styled(ListItem)(({ theme }) => ({
   "&.Mui-selected": {
     backgroundColor: theme.palette.action.selected,
@@ -62,10 +62,19 @@ const ActiveListItem = styled(ListItem)(({ theme }) => ({
   },
 }));
 
+/*************************| Pasge Layout |*******************************/
 const Layout = ({ children }) => {
+  const theme = useTheme(); // Access the current theme
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
+
+  // Check if screen is small using MUI's responsive breakpoints, and also hook for navigation and getting the current location
   const navigate = useNavigate();
   const location = useLocation();
+
+  // Check if screen width is below 640px, it shrinks the page atuomatically
   const isMobile = useMediaQuery("(max-width:640px)");
+
+  // State for controlling mini variant of the drawer
   const [miniVariant, setMiniVariant] = useState(false);
 
   // Automatically set miniVariant based on screen size
@@ -73,9 +82,10 @@ const Layout = ({ children }) => {
     setMiniVariant(isMobile);
   }, [isMobile]);
 
+  // Menu items with their respective icons and paths
   const menuItems = [
     {
-      text: "Home ",
+      text: "Home",
       icon: <AddHomeOutlined color="primary" />,
       path: "/",
     },
@@ -91,6 +101,7 @@ const Layout = ({ children }) => {
     },
   ];
 
+  // Function to toggle mini variant of the drawer
   const toggleMiniVariant = () => {
     setMiniVariant(!miniVariant);
   };
@@ -102,17 +113,21 @@ const Layout = ({ children }) => {
         background: theme.palette.background.default,
       }}
     >
+      {/* Custom styled drawer */}
       <CustomDrawer variant="permanent" anchor="left" miniVariant={miniVariant}>
+        {/* Drawer header with toggle icon */}
         <DrawerHeader>
           <MenuOpenIcon
-            color="secondary"
+            color="primary"
             onClick={toggleMiniVariant}
-            sx={{ cursor: "pointer" }}
+            sx={{
+              cursor: "pointer",
+              alignItems: isMobile ? "center" : "flex-end",
+            }}
           />
         </DrawerHeader>
-        <Container>
-          <Typography variant="h4">Logo</Typography>
-        </Container>
+
+        {/* List of navigation items */}
         <List>
           {menuItems.map((item) => (
             <ActiveListItem
@@ -127,14 +142,10 @@ const Layout = ({ children }) => {
           ))}
         </List>
       </CustomDrawer>
+      {/* Render the main content */}
       {children}
     </Box>
   );
 };
 
 export default Layout;
-
-/**
- * Make it professional responsive best approchae and best standard.
- *
- */

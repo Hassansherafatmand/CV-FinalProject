@@ -6,7 +6,7 @@ const fs = require("fs"); // For creating directory if it doesn't exist
 const app = express();
 const PORT = process.env.PORT || 8080;
 
-// Adjust this path to a dedicated folder OUTSIDE your source code directory
+// Adjust this path to a dedicated folder OUTSIDE the source code directory
 const uploadDir = path.join(__dirname, "public/uploads");
 
 // Create the upload directory if it doesn't exist (with error handling)
@@ -55,3 +55,4 @@ app.post("/upload", upload.single("file"), (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+s;

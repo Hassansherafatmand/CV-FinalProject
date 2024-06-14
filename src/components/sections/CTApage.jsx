@@ -8,10 +8,13 @@ import {
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 
+/*************************| Call to Action Page|*******************************/
 const CTApage = () => {
+  // defining the breaking point for mobile viewport
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
 
+  //cta object contains all the text content
   const cta = {
     title: "Let's Build Something Great Together",
     body: "I'm passionate about creating user-centric apps and websites that deliver exceptional results. Through a collaborative approach and a focus on efficiency, I help businesses achieve their goals. My experience and strong intuition allow me to work quickly and deliver high-quality solutions that exceed expectations.",
@@ -94,6 +97,7 @@ const CTApage = () => {
           >
             {cta.call}
           </Typography>
+          {/* Button for contacting me via email */}
           <Button
             variant="contained"
             color="primary"

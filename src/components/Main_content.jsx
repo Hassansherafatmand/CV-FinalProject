@@ -7,12 +7,17 @@ import SlideShow from "./sections/SlidShow";
 import IntroProjects from "./sections/IntroProjects";
 import CTApage from "./sections/CTApage";
 
+/*************************| Main Content Page|*******************************/
 const Main_content = () => {
   return (
+    //Used Grid system to make the page responsive
     <Box>
+      {/* Section- Hero page */}
       <SectionHero />
-      <SlideShow />
 
+      {/* Slidshow page */}
+      <SlideShow />
+      {/* All the sections here I wanted to be diffrent in viewport like(about, intoduction to project, project list and CTA page)  */}
       <Grid
         container
         spacing={4}

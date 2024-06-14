@@ -9,14 +9,17 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from "react-router-dom";
 
+/*************************| Main Content Page|*******************************/
 const SectionHero = () => {
+  // defining the breaking point for mobile viewport
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
   const [selectedSlide, setSelectedSlide] = useState(0);
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
 
+  //Defined all the content in section hero in array of object to control them better (add, delete, update)
   const slides = [
     {
       title: "Hi, I am Hassan",
@@ -36,15 +39,17 @@ const SectionHero = () => {
     },
   ];
 
+  //Used a click event handler for the button that if the VuttonText is "Get Started" navigate diffrently than if it is "Join Us".
   const handleClick = (buttonText) => {
     if (buttonText === "Get Started") {
-      navigate("/IntroProjects"); // Navigate to the internal page
+      navigate("/IntroProjects");
     } else if (buttonText === "Join Us") {
-      window.open("https://discord.gg/QrsGqjve", "_blank"); // Open the Discord link
+      window.open("https://discord.gg/QrsGqjve", "_blank");
     }
   };
 
   return (
+    // Used the Flex Box to make the page responsive
     <Box
       sx={{
         display: "flex",
@@ -54,6 +59,7 @@ const SectionHero = () => {
         padding: "40px 20px",
       }}
     >
+      {/* Iterated the Slide array to evoke the data and used them in some components  */}
       <Box maxWidth="lg">
         {slides.map((slide, index) => (
           <Box
@@ -75,7 +81,7 @@ const SectionHero = () => {
               src={slide.url}
               alt={slide.alt}
               sx={{
-                width: isSmallScreen ? "60vw" : "40%",
+                width: isSmallScreen ? "40vw" : "32%",
                 height: "auto",
                 borderRadius: "8px",
                 marginBottom: isSmallScreen ? "24px" : "0",
@@ -114,14 +120,8 @@ const SectionHero = () => {
                 color="primary"
                 size={isSmallScreen ? "medium" : "large"}
                 fullWidth={isSmallScreen}
-                onClick={() => handleClick(slide.buttonText)}
                 // Call handleClick on button click
-                sx={
-                  {
-                    // marginTop: "24px",
-                    // padding: "12px 24px", // Corrected the padding attribute here
-                  }
-                }
+                onClick={() => handleClick(slide.buttonText)}
               >
                 {slide.buttonText}
               </Button>
@@ -129,6 +129,8 @@ const SectionHero = () => {
           </Box>
         ))}
       </Box>
+
+      {/* I created two Radio button to change the slide in section hero */}
       <Box display="flex" justifyContent="center" mt={2} width="100%">
         <RadioGroup
           value={selectedSlide}

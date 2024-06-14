@@ -4,7 +4,9 @@ import useFetch from "../useFetch";
 import { useEffect, useState } from "react";
 import ProjectCards from "./ProjectCards";
 
+/*************************| Projects Page|*******************************/
 const Projects = () => {
+  //projectInfo contains all the category info for projects
   const projectInfo = {
     webDesign: {
       category: "Web Design",
@@ -20,6 +22,7 @@ const Projects = () => {
     },
   };
 
+  // Fetching the date in an object from useFetch component that I made to evoke the data.
   const {
     data: projects,
     error,
@@ -33,12 +36,14 @@ const Projects = () => {
     }
   }, [projects]);
 
+  //Even handling for deleting the project
   const handleDelete = async (id) => {
     await fetch("http://localhost:8000/projects/" + id, { method: "DELETE" });
     const newProjects = localProjects.filter((project) => project.id !== id);
     setLocalProjects(newProjects);
   };
 
+  //This function renders all the projects and seprate them by the category
   const renderProjectsByCategory = (category) => {
     return localProjects
       .filter((project) => project.category === category)
@@ -59,22 +64,38 @@ const Projects = () => {
       >
         My Projects
       </Typography>
-      <Typography variant="body1" sx={{ marginBottom: "40px" }}>
+      <Typography
+        variant="body1"
+        sx={{
+          marginBottom: "40px",
+          textAlign: "justify",
+          lineHeight: "2.5rem",
+          fontSize: "1.2rem",
+        }}
+      >
         Welcome to my project portfolio. Here you'll find a selection of my
         recent work in Web Design, App Design, and Graphic Design. Each project
         highlights my skills in creating user-centric designs and delivering
         high-quality solutions.
       </Typography>
 
+      {/* defining the breaking point for mobile viewport */}
       {isPending && <div>Loading...</div>}
       {error && <div>{error}</div>}
 
       {/* Web Design Section */}
       <Box sx={{ marginBottom: "40px" }}>
-        <Typography variant="h5" component="h2" sx={{ marginBottom: "20px" }}>
+        <Typography
+          variant="h5"
+          component="h2"
+          sx={{ marginBottom: "10px", fontWeight: "bold" }}
+        >
           {projectInfo.webDesign.category}
         </Typography>
-        <Typography variant="body1" sx={{ marginBottom: "20px" }}>
+        <Typography
+          variant="body1"
+          sx={{ marginBottom: "16px", fontSize: "1.1rem" }}
+        >
           {projectInfo.webDesign.body}
         </Typography>
         <Grid container spacing={3}>
@@ -84,10 +105,17 @@ const Projects = () => {
 
       {/* App Design Section */}
       <Box sx={{ marginBottom: "40px" }}>
-        <Typography variant="h5" component="h2" sx={{ marginBottom: "20px" }}>
+        <Typography
+          variant="h5"
+          component="h2"
+          sx={{ marginBottom: "10px", fontWeight: "bold" }}
+        >
           {projectInfo.appDesign.category}
         </Typography>
-        <Typography variant="body1" sx={{ marginBottom: "20px" }}>
+        <Typography
+          variant="body1"
+          sx={{ marginBottom: "16px", fontSize: "1.1rem" }}
+        >
           {projectInfo.appDesign.body}
         </Typography>
         <Grid container spacing={3}>
@@ -97,10 +125,17 @@ const Projects = () => {
 
       {/* Graphic Design Section */}
       <Box sx={{ marginBottom: "40px" }}>
-        <Typography variant="h5" component="h2" sx={{ marginBottom: "20px" }}>
+        <Typography
+          variant="h5"
+          component="h2"
+          sx={{ marginBottom: "10px", fontWeight: "bold" }}
+        >
           {projectInfo.graphicDesign.category}
         </Typography>
-        <Typography variant="body1" sx={{ marginBottom: "20px" }}>
+        <Typography
+          variant="body1"
+          sx={{ marginBottom: "16px", fontSize: "1.1rem" }}
+        >
           {projectInfo.graphicDesign.body}
         </Typography>
         <Grid container spacing={3}>

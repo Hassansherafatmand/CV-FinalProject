@@ -6,27 +6,39 @@ import CardActions from "@mui/material/CardActions";
 import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import { red } from "@mui/material/colors";
 import { DeleteOutline } from "@mui/icons-material";
 import { Button, CardMedia } from "@mui/material";
-import { Link } from "react-router-dom"; // Import Link from react-router-dom
+import { Link } from "react-router-dom";
 
+// defining the breaking point for mobile viewport
+// Fetching the date in an object from useFetch component that I made to evoke the data.
+//Error handling whether it is an error or data is pending
+/*************************| Project Cards Page|*******************************/
 const ProjectCards = ({ project, handleDelete }) => {
   return (
     <Card sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
       <CardHeader
         avatar={
-          <Avatar sx={{ bgcolor: "#F04848", color: "#000000" }}>
+          <Avatar sx={{ bgcolor: "#F04848", color: "#242424" }}>
             {project.title.charAt(0).toUpperCase()}
           </Avatar>
         }
         action={
           <IconButton onClick={() => handleDelete(project.id)}>
-            <DeleteOutline color="primary" />
+            <DeleteOutline
+              color="#CBCBCB"
+              sx={{
+                cursor: "pointer",
+                "&:hover": {
+                  color: "#F04848",
+                  fontSize: 30,
+                },
+              }}
+            />
           </IconButton>
         }
         title={project.title}
-        subheader={project.currentDate} // You can replace this with your desired subheader
+        subheader={project.currentDate}
       />
       <CardContent>
         <CardMedia

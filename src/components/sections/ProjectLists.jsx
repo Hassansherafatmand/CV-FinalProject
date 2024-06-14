@@ -12,10 +12,13 @@ import ProjectCards from "../pages/ProjectCards";
 import useFetch from "../useFetch";
 import { useTheme } from "@mui/material/styles";
 
-const Projects = () => {
+/*************************| Project List Page|*******************************/
+const ProjectList = () => {
+  // defining the breaking point for mobile viewport
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
 
+  // Fetching the date in an object from useFetch component that I made to evoke the data.
   const {
     data: projects,
     error,
@@ -28,29 +31,37 @@ const Projects = () => {
   // State to manage the projects list after fetching
   const [filteredProjects, setFilteredProjects] = useState([]);
 
-  // Effect to filter projects based on the selected tab
+  //I used the useEffect to filter projects based on the selected tab
   useEffect(() => {
     if (projects) {
-      if (filter === 0) {
-        setFilteredProjects(projects);
-      } else if (filter === 1) {
-        setFilteredProjects(
-          projects.filter(
-            (project) => project.category.toLowerCase() === "web-design"
-          )
-        );
-      } else if (filter === 2) {
-        setFilteredProjects(
-          projects.filter(
-            (project) => project.category.toLowerCase() === "app-design"
-          )
-        );
-      } else if (filter === 3) {
-        setFilteredProjects(
-          projects.filter(
-            (project) => project.category.toLowerCase() === "graphic-design"
-          )
-        );
+      switch (filter) {
+        case 0:
+          setFilteredProjects(projects);
+          break;
+        case 1:
+          setFilteredProjects(
+            projects.filter(
+              (project) => project.category.toLowerCase() === "web-design"
+            )
+          );
+          break;
+        case 2:
+          setFilteredProjects(
+            projects.filter(
+              (project) => project.category.toLowerCase() === "app-design"
+            )
+          );
+          break;
+        case 3:
+          setFilteredProjects(
+            projects.filter(
+              (project) => project.category.toLowerCase() === "graphic-design"
+            )
+          );
+          break;
+        default:
+          // Optional: Handle cases where the filter value does not match any known category
+          setFilteredProjects([]);
       }
     }
   }, [projects, filter]);
@@ -59,6 +70,7 @@ const Projects = () => {
     setFilter(newValue);
   };
 
+  //Event handler to delete the desired project
   const handleDelete = async (id) => {
     await fetch("http://localhost:8000/projects/" + id, {
       method: "DELETE",
@@ -82,6 +94,7 @@ const Projects = () => {
           Project Lists
         </Typography>
         {/* Filter tabs */}
+        {/* I used the Tabs component to display the project based on a specific category */}
         <Tabs
           value={filter}
           onChange={handleFilter}
@@ -90,8 +103,8 @@ const Projects = () => {
           sx={{
             flexWrap: isSmallScreen ? "wrap" : "nowrap",
             ".MuiTab-root": {
-              fontSize: isSmallScreen ? "0.9rem" : "1.2rem", // Adjust the font size
-              padding: isSmallScreen ? "8px 16px" : "12px 24px", // Adjust the padding
+              fontSize: isSmallScreen ? "0.9rem" : "1.2rem",
+              padding: isSmallScreen ? "8px 16px" : "12px 24px",
               minWidth: isSmallScreen ? 70 : 100, // Adjust the minimum width
             },
             ".Mui-selected": {
@@ -105,8 +118,10 @@ const Projects = () => {
           <Tab label="Graphic" />
         </Tabs>
 
+        {/* Error handling whether it is an error or data is pending */}
         {isPending && <div>Loading...</div>}
         {error && <div>{error}</div>}
+
         <Container>
           <Grid container spacing={3} sx={{ marginTop: "24px" }}>
             {filteredProjects.map((project) => (
@@ -121,4 +136,4 @@ const Projects = () => {
   );
 };
 
-export default Projects;
+export default ProjectList;

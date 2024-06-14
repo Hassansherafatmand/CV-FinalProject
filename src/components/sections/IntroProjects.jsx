@@ -5,21 +5,26 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import useFetch from "../useFetch";
 import { Link } from "react-router-dom";
 
+/******************|Introduction to projects Page|**********************/
 const IntroProjects = () => {
+  // defining the breaking point for mobile viewport
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const isLargeScreen = useMediaQuery(theme.breakpoints.up("lg"));
+
+  // Fetching the date in an object from useFetch component that I made to evoke the data.
   const {
     data: projects,
     isPending,
     error,
   } = useFetch("http://localhost:8000/projects");
 
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-  const isLargeScreen = useMediaQuery(theme.breakpoints.up("lg"));
-
+  //This Function finds the matched category to evoke the picture from the desire category
   const findProjectByCategory = (category) => {
     return projects?.find((project) => project.category === category);
   };
 
+  //This function structures the content(text, button) in a Grid layout.
   const ProjectSection = ({
     title,
     category,
@@ -28,9 +33,10 @@ const IntroProjects = () => {
   }) => {
     const project = findProjectByCategory(category);
 
+    //Responsiveness layout in mobile view port
     const gridDirection = isMobile
       ? "column"
-      : reverseOnLarge && isLargeScreen
+      : reverseOnLarge && isLargeScreen // Diffrent layout on larg screen
       ? "row-reverse"
       : "row";
 
@@ -105,6 +111,7 @@ const IntroProjects = () => {
     );
   };
 
+  //Error handling whether it is an error or data is pending
   if (isPending) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
 

@@ -11,10 +11,42 @@ import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
 import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 import { keyframes } from "@mui/system";
 import { useTheme } from "@mui/material/styles";
+
+/******************| Arrow Button Component|*************************/
+// I used these arrow to slide the pictures to left and right, also I customized them here.
+const ArrowButton = ({ onClick, icon }) => (
+  <IconButton
+    onClick={onClick}
+    sx={{
+      border: "none",
+      zIndex: 1,
+      "& svg": {
+        color: "primary.main",
+        width: "48px",
+        height: "48px",
+      },
+      margin: "0rem",
+      "&:hover": {
+        border: "none",
+        backgroundColor: "transparent",
+        "& svg": {
+          color: "secondary.main",
+          width: "48px",
+          height: "48px",
+        },
+      },
+    }}
+  >
+    {icon}
+  </IconButton>
+);
+/*************************| Slid Show Page|*******************************/
 const SlideShow = () => {
+  // defining the breaking point for mobile viewport
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
 
+  // Fetching the date in an object from useFetch component that I made to evoke the data.
   const {
     data: projects,
     isPending,
@@ -22,6 +54,7 @@ const SlideShow = () => {
   } = useFetch("http://localhost:8000/projects");
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
 
+  // Event handler to slide the show based on the index of the page.
   const handleNextSlide = () => {
     setCurrentSlideIndex((prevIndex) =>
       prevIndex === projects.length - 1 ? 0 : prevIndex + 1
@@ -33,10 +66,6 @@ const SlideShow = () => {
       prevIndex === 0 ? projects.length - 1 : prevIndex - 1
     );
   };
-
-  if (isPending) return <div>Loading...</div>;
-  if (error) return <div>{error}</div>;
-
   const getPrevIndex = (currentIndex, length) => {
     if (currentIndex === 0) {
       return length - 1;
@@ -57,8 +86,13 @@ const SlideShow = () => {
     }
   };
 
+  //Error handling whether it is an error or data is pending
+  if (isPending) return <div>Loading...</div>;
+  if (error) return <div>{error}</div>;
+
   return (
     <Box marginTop="128px">
+      {/* I used 3 <img> to be displayed in the screen */}
       <Box display="flex" justifyContent="cneter" gap="1%">
         <img
           src={
@@ -100,32 +134,4 @@ const SlideShow = () => {
     </Box>
   );
 };
-
-const ArrowButton = ({ onClick, icon }) => (
-  <IconButton
-    onClick={onClick}
-    sx={{
-      border: "none",
-      zIndex: 1, // Increase font size for larger icon
-      "& svg": {
-        color: "primary.main",
-        width: "48px",
-        height: "48px",
-      },
-      margin: "0rem", // Add margin for spacing (adjust as needed)
-      "&:hover": {
-        border: "none",
-        backgroundColor: "transparent",
-        "& svg": {
-          color: "secondary.main",
-          width: "48px",
-          height: "48px",
-        },
-      },
-    }}
-  >
-    {icon}
-  </IconButton>
-);
-
 export default SlideShow;
